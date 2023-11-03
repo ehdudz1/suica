@@ -116,6 +116,33 @@ window.onkeydown = (event) => {
   }
 }
 
+window.addEventListener('touchend', (event) => {
+  if (String(event.target).indexOf("Canvas") == -1) {
+    return
+  }
+  
+  if (disableAction) {
+    return
+  }
+
+  if (event.clientX > 600 || event.clientX < 30) {
+    return
+  }
+
+  Body.setPosition(currentBody, {
+    x: event.clientX,
+    y: currentBody.position.y,
+  })  
+
+  currentBody.isSleeping = false
+  disableAction = true
+
+  setTimeout(() => {
+    addFruit()
+    disableAction = false
+  }, 1000)
+})
+
 window.onmousedown = (event) => {
   if (String(event.target).indexOf("Canvas") == -1) {
     return
@@ -141,9 +168,6 @@ window.onmousedown = (event) => {
     addFruit()
     disableAction = false
   }, 1000)
- 
-
-  console.log(event.target)
 }
 
 // window.onkeyup = (event) => {
